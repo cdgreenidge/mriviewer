@@ -4,7 +4,7 @@
  */
 
 struct ImageBuffer {
-	GLfloat * const data;
+	const GLfloat * const data;
 	const size_t width;
 	const size_t height;
 };
@@ -26,10 +26,11 @@ class Slice {
 public:
 	explicit Slice(const ImageBuffer image, const Crosshair crosshair,
 				   const Labels labels);
-
-	const ImageBuffer image_;
-	Crosshair crosshair_;
+	void draw() const;
+	void setCrosshair(const Crosshair crosshair);
 
 private:
+	const ImageBuffer image_;
+	Crosshair crosshair_;
 	const Labels labels_;
 };
