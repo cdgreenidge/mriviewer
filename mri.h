@@ -19,4 +19,8 @@ public:
 
 private:
 	Array4 data_;
+	const size_t x_;
+	const size_t y_;
+	const size_t z_;
+	const size_t t_;
 };
