@@ -11,16 +11,16 @@ typedef boost::multi_array_types::index_range Range;
 class Mri {
 
 public:
-	explicit Mri(const float * const data, const size_t x, const size_t y,
-				 const size_t z, const size_t t);
-	Array2 coronalSlice(const size_t y, const size_t t) const;
-	Array2 sagittalSlice(const size_t x, const size_t t) const;
-	Array2 axialSlice(const size_t z, const size_t t) const;
+    explicit Mri(const float * const data, const size_t x, const size_t y,
+                 const size_t z, const size_t t);
+    Array2 coronalSlice(const size_t y, const size_t t) const;
+    Array2 sagittalSlice(const size_t x, const size_t t) const;
+    Array2 axialSlice(const size_t z, const size_t t) const;
 
 private:
-	Array4 data_;
-	const size_t x_;
-	const size_t y_;
-	const size_t z_;
-	const size_t t_;
+    Array4 data_;
+    const size_t x_;
+    const size_t y_;
+    const size_t z_;
+    const size_t t_;
 };

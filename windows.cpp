@@ -7,9 +7,9 @@
 #include "windows.h"
 
 MriWindow::MriWindow(const int x, const int y, const int w, const int h,
-					 const char * const label, const Mri mri,
-					 const Slice slice) :
-	Fl_Gl_Window(x, y, w, h, label),
-	mri_(mri),
-	slice_(slice)
+                     const char * const label, const Mri mri,
+                     const Slice slice) :
+    Fl_Gl_Window(x, y, w, h, label),
+    mri_(mri),
+    slice_(slice)
 { }

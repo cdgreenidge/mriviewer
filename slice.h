@@ -1,6 +1,6 @@
 /* Required headers:
- *  - cstddef
- *  - Fl/gl.h
+ * - cstddef
+ * - Fl/gl.h
  */
 
 struct ImageBuffer {
