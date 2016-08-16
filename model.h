@@ -2,6 +2,12 @@
  * - cstddef
  */
 
+enum Plane {
+    CORONAL,
+    SAGITTAL,
+    AXIAL
+};
+
 class Model {
 
 public:

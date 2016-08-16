@@ -1,5 +1,6 @@
 #include <boost/multi_array.hpp>
 #include <stdexcept>
+#include "model.h"
 #include "mri.h"
 
 Mri::Mri(const float *data, const size_t x, const size_t y,
