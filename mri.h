@@ -26,5 +26,5 @@ private:
     const size_t t_;
     const float max_;
 
-    float findMax(Array4 arr) const;
+    float findMax(const Array4 arr) const;
 };

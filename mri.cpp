@@ -43,7 +43,7 @@ float Mri::max() const {
     return max_;
 }
 
-float Mri::findMax(Array4 arr) const {
+float Mri::findMax(const Array4 arr) const {
     float val = arr[0][0][0][0];
     const float * const begin = arr.origin();
     const float * const end = begin + arr.num_elements();
