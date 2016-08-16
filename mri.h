@@ -13,6 +13,7 @@ class Mri {
 public:
     explicit Mri(const float * const data, const size_t x, const size_t y,
                  const size_t z, const size_t t);
+    float max() const;
     Array2 coronalSlice(const size_t y, const size_t t) const;
     Array2 sagittalSlice(const size_t x, const size_t t) const;
     Array2 axialSlice(const size_t z, const size_t t) const;
@@ -24,6 +25,3 @@ private:
     const size_t z_;
     const size_t t_;
 };
-
-
-float max(const Array4 &arr);
