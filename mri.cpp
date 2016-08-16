@@ -8,20 +8,9 @@ Mri::Mri(const float *data, const size_t x, const size_t y,
     x_(x),
     y_(y),
     z_(z),
-    t_(t)
+    t_(t),
+    max_(findMax(data_))
 { }
-
-float Mri::max() const {
-    float val = data_[0][0][0][0];
-    const float * const begin = data_.origin();
-    const float * const end = begin + data_.num_elements();
-    for (const float *i = begin; i < end; i++) {
-        if (*i > val) {
-            val = *i;
-        }
-    }
-    return val;
-}
 
 Array2 Mri::coronalSlice(const size_t y, const size_t t) const {
     if (y > y_) {
@@ -48,4 +37,20 @@ Array2 Mri::axialSlice(const size_t z, const size_t t) const {
         throw std::out_of_range("t out of range");
     }
     return data_[boost::indices[Range()][Range()][z][t]];
+}
+
+float Mri::max() const {
+    return max_;
+}
+
+float Mri::findMax(Array4 arr) const {
+    float val = arr[0][0][0][0];
+    const float * const begin = arr.origin();
+    const float * const end = begin + arr.num_elements();
+    for (const float *i = begin; i < end; i++) {
+        if (*i > val) {
+            val = *i;
+        }
+    }
+    return val;
 }
