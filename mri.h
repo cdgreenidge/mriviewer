@@ -19,6 +19,9 @@ public:
     size_t sagittalHeight() const;
     size_t axialWidth() const;
     size_t axialHeight() const;
+    size_t numCoronalSlices() const;
+    size_t numSagittalSlices() const;
+    size_t numAxialSlices() const;
     Array2 coronalSlice(const size_t y, const size_t t) const;
     Array2 sagittalSlice(const size_t x, const size_t t) const;
     Array2 axialSlice(const size_t z, const size_t t) const;

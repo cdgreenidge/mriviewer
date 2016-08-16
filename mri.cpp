@@ -36,6 +36,18 @@ size_t Mri::axialHeight() const {
     return y_;
 }
 
+size_t Mri::numCoronalSlices() const {
+    return y_;
+}
+
+size_t Mri::numSagittalSlices() const {
+    return x_;
+}
+
+size_t Mri::numAxialSlices() const {
+    return z_;
+}
+
 Array2 Mri::coronalSlice(const size_t y, const size_t t) const {
     if (y > y_) {
         throw std::out_of_range("y out of range");
