@@ -11,8 +11,8 @@ typedef boost::multi_array_types::index_range Range;
 class Mri {
 
 public:
-	Mri(const float * const data, const size_t x, const size_t y,
-		const size_t z, const size_t t);
+	explicit Mri(const float * const data, const size_t x, const size_t y,
+				 const size_t z, const size_t t);
 
 private:
 	Array4 data_;

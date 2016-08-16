@@ -24,8 +24,8 @@ struct Labels {
 class Slice {
 
 public:
-	Slice(const ImageBuffer image, const Crosshair crosshair,
-		  const Labels labels);
+	explicit Slice(const ImageBuffer image, const Crosshair crosshair,
+				   const Labels labels);
 
 	const ImageBuffer image_;
 	Crosshair crosshair_;
