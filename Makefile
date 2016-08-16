@@ -10,7 +10,7 @@ CXXFLAGS += -g -std=c++11 -Werror -Weverything \
 QUIET_CC = @echo '    ' CC $@
 QUIET_LINK = @echo '    ' LINK $@
 
-all: model.o slice.o mri.o windows.o
+all: model.o slice.o mri.o windows.o utils.o
 
 %.o: %.cpp
 	$(QUIET_CC)
