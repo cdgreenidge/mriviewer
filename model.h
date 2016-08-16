@@ -20,4 +20,4 @@ private:
     float scale_;
 };
 
-float checkScale(float scale);
+float checkScale(const float scale);
