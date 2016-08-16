@@ -12,6 +12,30 @@ Mri::Mri(const float *data, const size_t x, const size_t y,
     max_(findMax(data_))
 { }
 
+size_t Mri::coronalWidth() const {
+    return x_;
+}
+
+size_t Mri::coronalHeight() const {
+    return z_;
+}
+
+size_t Mri::sagittalWidth() const {
+    return y_;
+}
+
+size_t Mri::sagittalHeight() const {
+    return z_;
+}
+
+size_t Mri::axialWidth() const {
+    return x_;
+}
+
+size_t Mri::axialHeight() const {
+    return y_;
+}
+
 Array2 Mri::coronalSlice(const size_t y, const size_t t) const {
     if (y > y_) {
         throw std::out_of_range("y out of range");

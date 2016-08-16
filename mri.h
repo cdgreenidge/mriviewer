@@ -13,6 +13,12 @@ class Mri {
 public:
     explicit Mri(const float * const data, const size_t x, const size_t y,
                  const size_t z, const size_t t);
+    size_t coronalWidth() const;
+    size_t coronalHeight() const;
+    size_t sagittalWidth() const;
+    size_t sagittalHeight() const;
+    size_t axialWidth() const;
+    size_t axialHeight() const;
     Array2 coronalSlice(const size_t y, const size_t t) const;
     Array2 sagittalSlice(const size_t x, const size_t t) const;
     Array2 axialSlice(const size_t z, const size_t t) const;
