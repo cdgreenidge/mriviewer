@@ -16,25 +16,25 @@ enum Plane {
 
 class Mri {
 
-public:
-    explicit Mri(const float * const data, const size_t x, const size_t y,
-                 const size_t z, const size_t t);
-    size_t width(Plane plane) const;
-    size_t height(Plane plane) const;
-    size_t numSlices(Plane plane) const;
-    Array2 slice(Plane plane, size_t i, size_t t) const;
-    float max() const;
+    public:
+        explicit Mri(const float * const data, const size_t x, const size_t y,
+                    const size_t z, const size_t t);
+        size_t width(Plane plane) const;
+        size_t height(Plane plane) const;
+        size_t numSlices(Plane plane) const;
+        Array2 slice(Plane plane, size_t i, size_t t) const;
+        float max() const;
 
-private:
-    Array4 data_;
-    const size_t x_;
-    const size_t y_;
-    const size_t z_;
-    const size_t t_;
-    const float max_;
+    private:
+        Array4 data_;
+        const size_t x_;
+        const size_t y_;
+        const size_t z_;
+        const size_t t_;
+        const float max_;
 
-    Array2 coronalSlice(const size_t y, const size_t t) const;
-    Array2 sagittalSlice(const size_t x, const size_t t) const;
-    Array2 axialSlice(const size_t z, const size_t t) const;
-    float findMax(const Array4 arr) const;
+        Array2 coronalSlice(const size_t y, const size_t t) const;
+        Array2 sagittalSlice(const size_t x, const size_t t) const;
+        Array2 axialSlice(const size_t z, const size_t t) const;
+        float findMax(const Array4 arr) const;
 };
