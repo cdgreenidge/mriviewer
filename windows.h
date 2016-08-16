@@ -4,6 +4,7 @@
  * - FL/Fl_Gl_Window.H
  * - boost/multi_array.hpp
  * - slice.h
+ * - model.h
  * - mri.h
  */
 
@@ -11,9 +12,9 @@ class MriWindow : public Fl_Gl_Window {
 
 public:
     MriWindow(const int x, const int y, const int w, const int h,
-              const char * const label, const Mri mri, const Slice slice);
+              const char * const label, const Mri mri, const Model model);
 
-private:
+protected:
     Mri mri_;
-    Slice slice_;
+    Model model_;
 };
