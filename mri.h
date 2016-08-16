@@ -24,3 +24,6 @@ private:
     const size_t z_;
     const size_t t_;
 };
+
+
+float max(const Array4 &arr);
