@@ -2,7 +2,6 @@
 #include <FL/gl.H>
 #include <FL/Fl_Gl_Window.H>
 #include <boost/multi_array.hpp>
-#include "slice.h"
 #include "model.h"
 #include "mri.h"
 #include "windows.h"

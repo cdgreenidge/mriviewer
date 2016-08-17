@@ -14,7 +14,7 @@ QUIET_LINK = @echo '    ' LINK $@
 
 all: main
 
-main: slice.o main.o model.o mri.o utils.o windows.o
+main: main.o model.o mri.o utils.o windows.o
 	$(QUIET_LINK)
 	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
