@@ -33,6 +33,7 @@ private:
     size_t z_;
     size_t t_;
     float scale_;
+
+    float checkScale(const float scale) const;
 };
 
-float checkScale(const float scale);

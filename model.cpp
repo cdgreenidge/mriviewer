@@ -40,8 +40,7 @@ float Model::scale() const noexcept {
     return scale_;
 }
 
-
-float checkScale(const float scale) {
+float Model::checkScale(const float scale) const {
     if (scale <= 0.0f || 1.0f < scale) {
         throw std::out_of_range("scale must be in (0, 1]");
     }
