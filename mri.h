@@ -17,7 +17,7 @@ class Mri {
         size_t width(Plane plane) const;
         size_t height(Plane plane) const;
         size_t numSlices(Plane plane) const;
-        Array2 slice(Plane plane, size_t i, size_t t) const;
+        size_t numVolumes() const;
         float max() const;
 
     private:
@@ -28,8 +28,6 @@ class Mri {
         const size_t t_;
         const float max_;
 
-        Array2 coronalSlice(const size_t y, const size_t t) const;
-        Array2 sagittalSlice(const size_t x, const size_t t) const;
-        Array2 axialSlice(const size_t z, const size_t t) const;
+        Array2 subset(Slice slice, size_t t) const;
         float findMax(const Array4 arr) const;
 };

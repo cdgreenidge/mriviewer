@@ -46,42 +46,19 @@ size_t Mri::numSlices(Plane plane) const {
     }
 }
 
-Array2 Mri::slice(Plane plane, size_t i, size_t t) const {
-    switch (plane) {
+size_t Mri::numVolumes() const {
+    return t_;
+}
+
+Array2 Mri::subset(Slice slice, size_t t) const {
+    switch (slice.plane) {
         case CORONAL:
-            return coronalSlice(i, t);
+            return data_[boost::indices[Range()][slice.index][Range()][t]];
         case SAGITTAL:
-            return sagittalSlice(i, t);
+            return data_[boost::indices[slice.index][Range()][Range()][t]];
         case AXIAL:
-            return axialSlice(i, t);
+            return data_[boost::indices[Range()][Range()][slice.index][t]];
     }
-}
-
-Array2 Mri::coronalSlice(const size_t y, const size_t t) const {
-    if (y > y_) {
-        throw std::out_of_range("y out of range");
-    } else if (t > t_) {
-        throw std::out_of_range("t out of range");
-    }
-    return data_[boost::indices[Range()][y][Range()][t]];
-}
-
-Array2 Mri::sagittalSlice(const size_t x, const size_t t) const {
-    if (x > x_) {
-        throw std::out_of_range("x out of range");
-    } else if (t > t_) {
-        throw std::out_of_range("t out of range");
-    }
-    return data_[boost::indices[x][Range()][Range()][t]];
-}
-
-Array2 Mri::axialSlice(const size_t z, const size_t t) const {
-    if (z > z_) {
-        throw std::out_of_range("z out of range");
-    } else if (t > t_) {
-        throw std::out_of_range("t out of range");
-    }
-    return data_[boost::indices[Range()][Range()][z][t]];
 }
 
 float Mri::max() const {
