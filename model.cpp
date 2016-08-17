@@ -21,6 +21,17 @@ Slice Model::slice(Plane plane) const noexcept {
     }
 }
 
+Crosshair Model::crosshair(Plane plane) const noexcept {
+    switch (plane) {
+        case CORONAL:
+            return Crosshair {x_, z_};
+        case SAGITTAL:
+            return Crosshair {y_, z_};
+        case AXIAL:
+            return Crosshair {x_, y_};
+    }
+}
+
 size_t Model::t() const noexcept {
     return t_;
 }
