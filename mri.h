@@ -1,7 +1,7 @@
 /* Required headers:
  * - cstddef
- * - boost/multi_array.hpp
  * - model.h
+ * - image.h
  */
 
 typedef boost::const_multi_array_ref<float, 4> Array4;
@@ -18,6 +18,7 @@ class Mri {
         size_t height(const Plane plane) const;
         size_t numSlices(const Plane plane) const;
         size_t numVolumes() const;
+        void fillImage(Image &image, Slice slice, size_t t) const;
         float max() const;
 
     private:

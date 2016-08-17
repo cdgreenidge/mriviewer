@@ -1,5 +1,6 @@
 #include <boost/multi_array.hpp>
-#include <stdexcept>
+#include <FL/gl.H>
+#include "image.h"
 #include "model.h"
 #include "mri.h"
 
@@ -48,6 +49,25 @@ size_t Mri::numSlices(const Plane plane) const {
 
 size_t Mri::numVolumes() const {
     return t_;
+}
+
+void Mri::fillImage(Image &image, Slice slice, size_t t) const {
+    size_t imWidth = image.width();
+    size_t imHeight = image.height();
+    if (imWidth != width(slice.plane)) {
+        throw std::invalid_argument("image width not equal to slice width");
+    } else if (imHeight != height(slice.plane)) {
+        throw std::invalid_argument("image height not equal to slice height");
+    }
+
+    Array2 arr = subset(slice, t);
+    GLfloat *data = image.data();
+    for (size_t i = 0; i < imWidth; i++) {
+        for (size_t j = 0; j < imHeight; j++) {
+            data[i + j*imWidth] = arr[i][j];
+        }
+    }
+    return;
 }
 
 Array2 Mri::subset(const Slice slice, const size_t t) const {

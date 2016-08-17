@@ -2,7 +2,7 @@
  * - FL/Fl.H
  * - FL/gl.H
  * - FL/Fl_Gl_Window.H
- * - boost/multi_array.hpp
+ * - image.h
  * - slice.h
  * - model.h
  * - mri.h

@@ -3,6 +3,7 @@
 #include <FL/Fl_Gl_Window.H>
 #include <boost/multi_array.hpp>
 #include <string>
+#include "image.h"
 #include "model.h"
 #include "mri.h"
 #include "utils.h"
