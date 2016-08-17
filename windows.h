@@ -15,15 +15,25 @@ struct Labels {
     const char * const bottom;
 };
 
+
 class MriWindow : public Fl_Gl_Window {
 
 public:
     MriWindow(const int x, const int y, const int w, const int h,
               const char * const i, const Mri mri, const Model model,
-              const Labels labels);
+              const Plane plane, const Labels labels);
 
 protected:
     Mri mri_;
     Model model_;
+    Plane plane_;
     Labels labels_;
+};
+
+
+class CoronalWindow : MriWindow {
+
+public:
+    CoronalWindow(const int x, const int y, const int w, const int n,
+                  const char* const i, const Mri mri, const Model model);
 };
