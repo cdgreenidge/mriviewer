@@ -8,15 +8,18 @@ enum Plane {
     AXIAL
 };
 
+
 struct Slice {
     Plane plane;
     size_t index;
 };
 
+
 struct Crosshair {
     size_t x;
     size_t y;
 };
+
 
 class Model {
 
