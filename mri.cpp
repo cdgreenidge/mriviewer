@@ -13,7 +13,7 @@ Mri::Mri(const float *data, const size_t x, const size_t y,
     max_(findMax(data_))
 { }
 
-size_t Mri::width(Plane plane) const {
+size_t Mri::width(const Plane plane) const {
     switch (plane) {
         case CORONAL:
             return x_;
@@ -24,7 +24,7 @@ size_t Mri::width(Plane plane) const {
     }
 }
 
-size_t Mri::height(Plane plane) const {
+size_t Mri::height(const Plane plane) const {
     switch (plane) {
         case CORONAL:
             return z_;
@@ -35,7 +35,7 @@ size_t Mri::height(Plane plane) const {
     }
 }
 
-size_t Mri::numSlices(Plane plane) const {
+size_t Mri::numSlices(const Plane plane) const {
     switch (plane) {
         case CORONAL:
             return y_;
@@ -50,7 +50,7 @@ size_t Mri::numVolumes() const {
     return t_;
 }
 
-Array2 Mri::subset(Slice slice, size_t t) const {
+Array2 Mri::subset(const Slice slice, const size_t t) const {
     switch (slice.plane) {
         case CORONAL:
             return data_[boost::indices[Range()][slice.index][Range()][t]];

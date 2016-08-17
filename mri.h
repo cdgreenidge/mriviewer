@@ -14,9 +14,9 @@ class Mri {
     public:
         explicit Mri(const float * const data, const size_t x, const size_t y,
                      const size_t z, const size_t t);
-        size_t width(Plane plane) const;
-        size_t height(Plane plane) const;
-        size_t numSlices(Plane plane) const;
+        size_t width(const Plane plane) const;
+        size_t height(const Plane plane) const;
+        size_t numSlices(const Plane plane) const;
         size_t numVolumes() const;
         float max() const;
 
@@ -28,6 +28,6 @@ class Mri {
         const size_t t_;
         const float max_;
 
-        Array2 subset(Slice slice, size_t t) const;
+        Array2 subset(const Slice slice, const size_t t) const;
         float findMax(const Array4 arr) const;
 };
