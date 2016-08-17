@@ -10,6 +10,21 @@ Model::Model(size_t x, size_t y, size_t z, size_t t, float scale) :
     scale_(checkScale(scale))
 { }
 
+Slice Model::slice(Plane plane) const noexcept {
+    switch (plane) {
+        case CORONAL:
+            return Slice {plane, y_};
+        case SAGITTAL:
+            return Slice {plane, x_};
+        case AXIAL:
+            return Slice {plane, z_};
+    }
+}
+
+size_t Model::t() const noexcept {
+    return t_;
+}
+
 float Model::scale() const noexcept {
     return scale_;
 }
