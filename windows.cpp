@@ -8,9 +8,10 @@
 #include "windows.h"
 
 MriWindow::MriWindow(const int x, const int y, const int w, const int h,
-                     const char * const label, const Mri mri,
-                     const Model model) :
-    Fl_Gl_Window(x, y, w, h, label),
+                     const char * const i, const Mri mri, const Model model,
+                     const Labels labels) :
+    Fl_Gl_Window(x, y, w, h, i),
     mri_(mri),
-    model_(model)
+    model_(model),
+    labels_(labels)
 { }
