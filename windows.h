@@ -37,3 +37,19 @@ public:
     CoronalWindow(const int x, const int y, const int w, const int n,
                   const char* const i, const Mri mri, const Model model);
 };
+
+
+class SagittalWindow : MriWindow {
+
+public:
+    SagittalWindow(const int x, const int y, const int w, const int n,
+                   const char* const i, const Mri mri, const Model model);
+};
+
+
+class AxialWindow : MriWindow {
+
+public:
+    AxialWindow(const int x, const int y, const int w, const int n,
+                const char* const i, const Mri mri, const Model model);
+};

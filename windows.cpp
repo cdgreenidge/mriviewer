@@ -17,8 +17,23 @@ MriWindow::MriWindow(const int x, const int y, const int w, const int h,
     labels_(labels)
 { }
 
+
 CoronalWindow::CoronalWindow(const int x, const int y, const int w,
                              const int h, const char* const i, const Mri mri,
                              const Model model) :
     MriWindow(x, y, w, h, i, mri, model, CORONAL, Labels {"L", "S", "R", "I"})
+{ }
+
+
+SagittalWindow::SagittalWindow(const int x, const int y, const int w,
+                               const int h, const char* const i, const Mri mri,
+                               const Model model) :
+    MriWindow(x, y, w, h, i, mri, model, SAGITTAL, Labels {"A", "S", "P", "I"})
+{ }
+
+
+AxialWindow::AxialWindow(const int x, const int y, const int w,
+                         const int h, const char* const i, const Mri mri,
+                         const Model model) :
+    MriWindow(x, y, w, h, i, mri, model, AXIAL, Labels {"L", "A", "R", "P"})
 { }
