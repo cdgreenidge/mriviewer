@@ -23,4 +23,5 @@ main: slice.o main.o model.o mri.o utils.o windows.o
 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 clean:
-	rm -rf *.o
+	rm *.o
+	rm main
