@@ -31,6 +31,24 @@ protected:
     Image image_;
     Labels labels_;
 
+	struct {
+		GLuint vertexBuffer;
+		GLuint elementBuffer;
+		GLuint vertexShader;
+		GLuint fragmentShader;
+		GLuint program;
+		struct {
+			GLuint position;
+			GLuint texcoord;
+		} attributes;
+		struct {
+			GLuint texture;
+			GLint overlayColor;
+			GLint overlayAlpha;
+		} uniforms;
+		GLuint texture;
+	} resources_;
+
     void draw();
 };
 
