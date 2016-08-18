@@ -15,8 +15,9 @@ MriWindow::MriWindow(const int x, const int y, const int w, const int h,
     model_(model),
     plane_(plane),
     image_(mri.width(plane), mri.height(plane)),
-    labels_(labels)
-{ }
+    labels_(labels) {
+    mri.fillImage(image_, model.slice(plane), model.t());
+}
 
 
 CoronalWindow::CoronalWindow(const int x, const int y, const int w,
