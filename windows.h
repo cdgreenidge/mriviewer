@@ -30,6 +30,8 @@ protected:
     Plane plane_;
     Image image_;
     Labels labels_;
+
+    void draw();
 };
 
 

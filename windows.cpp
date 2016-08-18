@@ -38,3 +38,8 @@ AxialWindow::AxialWindow(const int x, const int y, const int w,
                          const Model model) :
     MriWindow(x, y, w, h, i, mri, model, AXIAL, Labels {"L", "A", "R", "P"})
 { }
+
+
+void MriWindow::draw() {
+    return;
+}

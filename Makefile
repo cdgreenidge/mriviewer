@@ -3,7 +3,8 @@ CXXFLAGS += -g -std=c++11 -Werror -Weverything \
 	-Wno-padded \
 	-Wno-sign-compare \
 	-Wno-sign-conversion \
-	-Wno-weak-vtables
+	-Wno-weak-vtables \
+	-Wno-unused-variable
 LDFLAGS := $(LDFLAGS) `fltk-config --use-gl --ldflags`
 
 # Note to self: remove weak vtables warning for release and refactor
