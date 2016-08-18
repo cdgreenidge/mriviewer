@@ -14,6 +14,7 @@ MriWindow::MriWindow(const int x, const int y, const int w, const int h,
     mri_(mri),
     model_(model),
     plane_(plane),
+    image_(mri.width(plane), mri.height(plane)),
     labels_(labels)
 { }
 

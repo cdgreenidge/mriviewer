@@ -28,6 +28,7 @@ protected:
     Mri mri_;
     Model model_;
     Plane plane_;
+    Image image_;
     Labels labels_;
 };
 
