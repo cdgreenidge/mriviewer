@@ -31,6 +31,7 @@ protected:
     Image image_;
     Labels labels_;
 
+    float maxLength_;
 	struct {
 		GLuint vertexBuffer;
 		GLuint elementBuffer;
@@ -50,6 +51,17 @@ protected:
 	} resources_;
 
     void draw();
+    GLuint makeShader(GLenum type, const char *filename);
+    GLuint makeProgram(GLuint vertexShader, GLuint fragmentShader);
+    GLuint makeTexture(const GLfloat *slice, size_t bufWidth,
+                       size_t bufHeight);
+    GLfloat getMriWidthCoord();
+    GLfloat getMriHeightCoord();
+    GLfloat getCrosshairXCoord(GLfloat left);
+    GLfloat getCrosshairYCoord(GLfloat bottom);
+    GLuint makeBuffer(GLenum target, const void *bufferData,
+                      GLsizei bufferSize);
+    void gl_draw_centered(const char *string, float x, float y);
 };
 
 
