@@ -3,8 +3,8 @@
 #include <cstddef>
 #include <stdexcept>
 #include "image.h"
-#include "model.h"
 #include "mri.h"
+#include "model.h"
 
 Model::Model(size_t x, size_t y, size_t z, size_t t, float scale) :
     x_(x),
@@ -12,6 +12,14 @@ Model::Model(size_t x, size_t y, size_t z, size_t t, float scale) :
     z_(z),
     t_(t),
     scale_(checkScale(scale))
+{ }
+
+Model::Model(Mri mri) :
+    x_(mri.numSlices(SAGITTAL) / 2),
+    y_(mri.numSlices(CORONAL) / 2),
+    z_(mri.numSlices(AXIAL) / 2),
+    t_(mri.numVolumes()),
+    scale_(1.0f)
 { }
 
 Slice Model::slice(Plane plane) const noexcept {

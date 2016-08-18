@@ -4,8 +4,8 @@
 #include <boost/multi_array.hpp>
 #include <string>
 #include "image.h"
-#include "model.h"
 #include "mri.h"
+#include "model.h"
 #include "utils.h"
 #include "windows.h"
 

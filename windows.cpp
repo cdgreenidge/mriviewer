@@ -3,8 +3,8 @@
 #include <FL/Fl_Gl_Window.H>
 #include <boost/multi_array.hpp>
 #include "image.h"
-#include "model.h"
 #include "mri.h"
+#include "model.h"
 #include "windows.h"
 
 MriWindow::MriWindow(const int x, const int y, const int w, const int h,

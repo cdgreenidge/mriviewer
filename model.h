@@ -1,19 +1,10 @@
 /* Required headers:
  * - FL/gl.H
+ * - boost/multi_array.hpp
  * - cstddef
+ * - model.h
+ * - image.h
  */
-
-enum Plane {
-    CORONAL,
-    SAGITTAL,
-    AXIAL
-};
-
-
-struct Slice {
-    Plane plane;
-    size_t index;
-};
 
 
 struct Crosshair {
@@ -26,6 +17,7 @@ class Model {
 
 public:
     explicit Model(size_t x, size_t y, size_t z, size_t t, float scale);
+    explicit Model(Mri mri);
     Slice slice(Plane plane) const noexcept;
     Crosshair crosshair(Plane plane) const noexcept;
     size_t t() const noexcept;

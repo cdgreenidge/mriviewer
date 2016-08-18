@@ -1,8 +1,8 @@
 #include <boost/multi_array.hpp>
 #include <FL/gl.H>
 #include "image.h"
-#include "model.h"
 #include "mri.h"
+#include "model.h"
 
 Mri::Mri(const float *data, const size_t x, const size_t y,
          const size_t z, const size_t t) :
