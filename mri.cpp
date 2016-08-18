@@ -64,7 +64,7 @@ void Mri::fillImage(Image &image, Slice slice, size_t t) const {
     GLfloat *data = image.data();
     for (size_t i = 0; i < imWidth; i++) {
         for (size_t j = 0; j < imHeight; j++) {
-            data[i + j*imWidth] = arr[i][j];
+            data[i + j*imWidth] = arr[i][j] / max_;
         }
     }
     return;
