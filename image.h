@@ -1,5 +1,5 @@
 /* Required headers:
- * - Fl/gl.H
+ * - FL/gl.H
  * - cstddef
  */
 

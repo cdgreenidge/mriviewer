@@ -1,6 +1,10 @@
+#include <FL/gl.H>
+#include <boost/multi_array.hpp>
 #include <cstddef>
 #include <stdexcept>
+#include "image.h"
 #include "model.h"
+#include "mri.h"
 
 Model::Model(size_t x, size_t y, size_t z, size_t t, float scale) :
     x_(x),
