@@ -18,7 +18,7 @@ Model::Model(Mri mri) :
     x_(mri.numSlices(SAGITTAL) / 2),
     y_(mri.numSlices(CORONAL) / 2),
     z_(mri.numSlices(AXIAL) / 2),
-    t_(mri.numVolumes()),
+    t_(0),
     scale_(1.0f)
 { }
 

@@ -23,6 +23,7 @@ int main() {
     std::string file = readBinFile("/Users/cdg4/Downloads/mri.bin");
     const float * const data = reinterpret_cast<const float *> (file.data());
     Mri mri(data, 61, 73, 61, 78);
+    Model model(mri);
 
     return 0;
 }
