@@ -52,12 +52,15 @@ void MriWindow::draw() {
         makeProgram(resources_.vertexShader, resources_.fragmentShader);
     resources_.attributes.position = static_cast<GLuint>(
         glGetAttribLocation(resources_.program, "position"));
+    resources_.attributes.texcoord = static_cast<GLuint>(
+        glGetAttribLocation(resources_.program, "texcoord"));
     resources_.uniforms.texture = static_cast<GLuint>(
         glGetUniformLocation(resources_.program, "texture"));
     resources_.uniforms.overlayColor =
         glGetUniformLocation(resources_.program, "overlayColor");
     resources_.uniforms.overlayAlpha =
         glGetUniformLocation(resources_.program, "overlayAlpha");
+
   }
 
   if (!valid()) {
