@@ -2,4 +2,4 @@
  * - string
  */
 
-std::string readBinFile(const char * const fname);
+std::string readBinFile(const char* const fname);
