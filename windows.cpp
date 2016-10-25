@@ -39,6 +39,29 @@ AxialWindow::AxialWindow(const int x, const int y, const int w, const int h,
                          const char *const i, const Mri mri, const Model model)
     : MriWindow(x, y, w, h, i, mri, model, AXIAL, Labels{"L", "A", "R", "P"}) {}
 
+int MriWindow::handle(int event) {
+    float window_x;
+    float window_y;
+    float texture_x;
+    float texture_y;
+
+    switch(event) {
+    case FL_DRAG:
+        /* Fallthrough */
+    case FL_PUSH:
+        window_x = (2.0f * Fl::event_x() / w()) - 1;
+        window_y = (2.0f * Fl::event_y() / h()) - 1;
+        std::cout << getMriWidthCoord();
+        texture_x = window_x / getMriWidthCoord();
+        texture_y = window_y / getMriHeightCoord();
+        std::cout << "Texture coordinates: (" << texture_x
+                  << ", " << texture_y << ")"<< std::endl;
+        return 1;
+    default:
+        return Fl_Gl_Window::handle(event);
+    }
+}
+
 void MriWindow::draw() {
   /* Initialize resources */
   GLint oldShader;

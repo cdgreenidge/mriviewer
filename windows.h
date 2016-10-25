@@ -48,6 +48,10 @@ class MriWindow : public Fl_Gl_Window {
     GLuint texture;
   } resources_;
 
+  /* Event handling */
+  int handle(int event);
+
+  /* Rendering */
   void draw();
   GLuint makeShader(GLenum type, const char *filename);
   GLuint makeProgram(GLuint vertexShader, GLuint fragmentShader);
