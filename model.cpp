@@ -42,6 +42,12 @@ size_t Model::t() const noexcept { return t_; }
 
 float Model::scale() const noexcept { return scale_; }
 
+void Model::updatePush(const float textureX, const float textureY) {
+    (void) textureX;
+    (void) textureY;
+    return;
+}
+
 float Model::checkScale(const float scale) const {
   if (scale <= 0.0f || 1.0f < scale) {
     throw std::out_of_range("scale must be in (0, 1]");

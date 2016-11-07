@@ -20,6 +20,9 @@ class Model {
   size_t t() const noexcept;
   float scale() const noexcept;
 
+  // Callbacks for GUI event handling
+  void updatePush(const float textureX, const float textureY);
+
  private:
   size_t x_;
   size_t y_;
