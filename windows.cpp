@@ -45,6 +45,10 @@ void MriWindow::draw() {
   glGetIntegerv(GL_CURRENT_PROGRAM, &oldShader);
 
   if (!context_valid()) {
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+
     resources_.vertexShader = makeShader(GL_VERTEX_SHADER, "vertexShader.glsl");
     resources_.fragmentShader =
         makeShader(GL_FRAGMENT_SHADER, "fragmentShader.glsl");
@@ -60,15 +64,19 @@ void MriWindow::draw() {
         glGetUniformLocation(resources_.program, "overlayColor");
     resources_.uniforms.overlayAlpha =
         glGetUniformLocation(resources_.program, "overlayAlpha");
-
+    resources_.texture = makeTexture(image_.width(), image_.height());
   }
 
   if (!valid()) {
     glViewport(0, 0, w(), h());
   }
-
-  resources_.texture =
-      makeTexture(image_.data(), image_.width(), image_.height());
+  GLfloat data[] = {0.1f, 0.2f, 0.3f,
+		    0.4f, 0.5f, 0.6f,
+		    0.7f, 0.8f, 0.9f};
+  /* Load texture data */
+  glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, static_cast<GLsizei>(image_.width()),
+		  static_cast<GLsizei>(image_.height()), GL_LUMINANCE, GL_FLOAT,
+		  image_.data());
 
   /* Calculate texture coordinates */
   Crosshair crosshair = model_.crosshair(plane_);
@@ -154,7 +162,6 @@ void MriWindow::draw() {
   glUniform1f(resources_.uniforms.overlayAlpha, 0.0f);
   glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT,
                  static_cast<void *>(0));
-  glDeleteTextures(1, &resources_.texture);
 
   /* Rennder crosshairs */
   glUniform4f(resources_.uniforms.overlayColor, 1, 0, 0, 1);
@@ -210,8 +217,7 @@ GLuint MriWindow::makeProgram(GLuint vertexShader, GLuint fragmentShader) {
   return program;
 }
 
-GLuint MriWindow::makeTexture(const GLfloat *slice, size_t bufWidth,
-                              size_t bufHeight) {
+GLuint MriWindow::makeTexture(size_t bufWidth, size_t bufHeight) {
   GLuint texture;
   glGenTextures(1, &texture);
   glBindTexture(GL_TEXTURE_2D, texture);
@@ -219,9 +225,11 @@ GLuint MriWindow::makeTexture(const GLfloat *slice, size_t bufWidth,
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, static_cast<GLsizei>(bufWidth),
                static_cast<GLsizei>(bufHeight), 0, GL_LUMINANCE, GL_FLOAT,
-               slice);
+	       NULL);
   return texture;
 }
 

@@ -51,7 +51,7 @@ class MriWindow : public Fl_Gl_Window {
   void draw();
   GLuint makeShader(GLenum type, const char *filename);
   GLuint makeProgram(GLuint vertexShader, GLuint fragmentShader);
-  GLuint makeTexture(const GLfloat *slice, size_t bufWidth, size_t bufHeight);
+  GLuint makeTexture(size_t bufWidth, size_t bufHeight);
   GLfloat getMriWidthCoord();
   GLfloat getMriHeightCoord();
   GLfloat getCrosshairXCoord(GLfloat left);
