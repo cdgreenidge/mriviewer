@@ -10,6 +10,7 @@
 #include "model.h"
 #include "utils.h"
 #include "windows.h"
+#include "main.h"
 
 MriWindow::MriWindow(const int x, const int y, const int w, const int h,
                      const char *const i, const Mri mri, Model &model,
@@ -78,9 +79,7 @@ int MriWindow::handle(int event) {
 
   // The MRI windows are the first 3 widgets in the top window. Redraw
   // them all.
-  for (int i = 0; i < 3; i++) {
-    static_cast<Fl_Group *>(window()->child(i))->child(0)->redraw();
-  }
+  static_cast<MainWindow *>(window())->redrawMri();
   return 1;
 }
 

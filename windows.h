@@ -67,19 +67,19 @@ class MriWindow : public Fl_Gl_Window {
   void gl_draw_centered(const char *string, float x, float y);
 };
 
-class CoronalWindow : MriWindow {
+class CoronalWindow : public MriWindow {
  public:
   CoronalWindow(const int x, const int y, const int w, const int n,
                 const char *const i, const Mri mri, Model &model);
 };
 
-class SagittalWindow : MriWindow {
+class SagittalWindow : public MriWindow {
  public:
   SagittalWindow(const int x, const int y, const int w, const int n,
                  const char *const i, const Mri mri, Model &model);
 };
 
-class AxialWindow : MriWindow {
+class AxialWindow : public MriWindow {
  public:
   AxialWindow(const int x, const int y, const int w, const int n,
               const char *const i, const Mri mri, Model &model);

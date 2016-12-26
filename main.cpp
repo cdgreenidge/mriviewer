@@ -8,6 +8,7 @@
 #include "model.h"
 #include "utils.h"
 #include "windows.h"
+#include "main.h"
 
 void setColorTheme();
 
@@ -15,6 +16,34 @@ void setColorTheme() {
   Fl::background2(255, 255, 255);
   Fl::background(0, 0, 0);
   Fl::foreground(200, 200, 200);
+}
+
+MainWindow::MainWindow(const Mri &mri, Model &model)
+    : Fl_Window(800, 600, "MRI Viewer"),
+      coronalGroup_(new Fl_Group(6, 21, 391, 276, "Coronal")),
+      sagittalGroup_(new Fl_Group(402, 21, 391, 276, "Sagittal")),
+      axialGroup_(new Fl_Group(6, 318, 391, 276, "Axial")),
+      coronal_(new CoronalWindow(6, 21, 391, 276, "Coronal", mri, model)),
+      sagittal_(new SagittalWindow(402, 21, 391, 276, "Sagittal", mri, model)),
+      axial_(new AxialWindow(6, 318, 391, 276, "Axial", mri, model)) {
+  size_range(600, 450, 0, 0, 0, 0, true);
+  resizable(this);
+  add(coronalGroup_);
+  coronalGroup_->labelfont(FL_HELVETICA_BOLD);
+  coronalGroup_->add(coronal_);
+  add(sagittalGroup_);
+  sagittalGroup_->labelfont(FL_HELVETICA_BOLD);
+  sagittalGroup_->add(sagittal_);
+  add(axialGroup_);
+  axialGroup_->labelfont(FL_HELVETICA_BOLD);
+  axialGroup_->add(axial_);
+}
+
+void MainWindow::redrawMri() {
+  coronal_->redraw();
+  sagittal_->redraw();
+  axial_->redraw();
+  return;
 }
 
 int main(int argc, char **argv) {
@@ -25,28 +54,7 @@ int main(int argc, char **argv) {
   Mri mri(data, 61, 73, 61, 78);
   Model model(mri);
 
-  Fl_Window *mainWindow = new Fl_Window(800, 600, "MRI Viewer");
-  mainWindow->size_range(600, 450, 0, 0, 0, 0, true);
-  mainWindow->resizable(mainWindow);
-
-  Fl_Group *coronalGroup = new Fl_Group(6, 21, 391, 276, "Coronal");
-  coronalGroup->labelfont(FL_HELVETICA_BOLD);
-  CoronalWindow *coronal =
-      new CoronalWindow(6, 21, 391, 276, "Coronal", mri, model);
-  coronalGroup->end();
-
-  Fl_Group *sagittalGroup = new Fl_Group(402, 21, 391, 276, "Sagittal");
-  sagittalGroup->labelfont(FL_HELVETICA_BOLD);
-  SagittalWindow *sagittal =
-      new SagittalWindow(402, 21, 391, 276, "Sagittal", mri, model);
-  sagittalGroup->end();
-
-  Fl_Group *axialGroup = new Fl_Group(6, 318, 391, 276, "Axial");
-  axialGroup->labelfont(FL_HELVETICA_BOLD);
-  AxialWindow *axial = new AxialWindow(6, 318, 391, 276, "Axial", mri, model);
-  axialGroup->end();
-
-  mainWindow->end();
+  MainWindow *mainWindow = new MainWindow(mri, model);
   mainWindow->show(argc, argv);
 
   return Fl::run();
