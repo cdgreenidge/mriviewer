@@ -5,6 +5,7 @@
 #include "image.h"
 #include "mri.h"
 #include "model.h"
+#include <iostream>
 
 Model::Model(size_t x, size_t y, size_t z, size_t t, float scale)
     : x_(x), y_(y), z_(z), t_(t), scale_(checkScale(scale)) {}
@@ -42,10 +43,24 @@ size_t Model::t() const noexcept { return t_; }
 
 float Model::scale() const noexcept { return scale_; }
 
-void Model::updatePush(const float textureX, const float textureY) {
-    (void) textureX;
-    (void) textureY;
-    return;
+void Model::updatePush(const size_t voxelX, const size_t voxelY,
+		       const Plane plane) {
+  (void) voxelX;
+  (void) voxelY;
+  switch (plane) {
+    case CORONAL:
+      x_ = voxelX;
+      z_ = voxelY;
+      return;
+    case SAGITTAL:
+      y_ = voxelX;
+      z_ = voxelY;
+      return;
+    case AXIAL:
+      x_ = voxelX;
+      y_ = voxelY;
+      return;
+  }
 }
 
 float Model::checkScale(const float scale) const {

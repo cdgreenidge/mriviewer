@@ -3,6 +3,7 @@
 #include <FL/Fl_Gl_Window.H>
 #include <boost/multi_array.hpp>
 #include <iostream>
+#include <limits>
 #include <string>
 #include "image.h"
 #include "mri.h"
@@ -11,7 +12,7 @@
 #include "windows.h"
 
 MriWindow::MriWindow(const int x, const int y, const int w, const int h,
-                     const char *const i, const Mri mri, const Model model,
+                     const char *const i, const Mri mri, Model &model,
                      const Plane plane, const Labels labels)
     : Fl_Gl_Window(x, y, w, h, i),
       mri_(mri),
@@ -19,24 +20,27 @@ MriWindow::MriWindow(const int x, const int y, const int w, const int h,
       plane_(plane),
       image_(mri.width(plane), mri.height(plane)),
       labels_(labels),
-      maxLength_(0.8f) {
+      maxLength_(0.8f),
+      bottom_(0.0f),
+      left_(0.0f)
+{
   mri.fillImage(image_, model.slice(plane), model.t());
 }
 
 CoronalWindow::CoronalWindow(const int x, const int y, const int w, const int h,
                              const char *const i, const Mri mri,
-                             const Model model)
+                             Model &model)
     : MriWindow(x, y, w, h, i, mri, model, CORONAL,
                 Labels{"L", "S", "R", "I"}) {}
 
 SagittalWindow::SagittalWindow(const int x, const int y, const int w,
                                const int h, const char *const i, const Mri mri,
-                               const Model model)
+                               Model &model)
     : MriWindow(x, y, w, h, i, mri, model, SAGITTAL,
                 Labels{"A", "S", "P", "I"}) {}
 
 AxialWindow::AxialWindow(const int x, const int y, const int w, const int h,
-                         const char *const i, const Mri mri, const Model model)
+                         const char *const i, const Mri mri, Model &model)
     : MriWindow(x, y, w, h, i, mri, model, AXIAL, Labels{"L", "A", "R", "P"}) {}
 
 int MriWindow::handle(int event) {
@@ -44,22 +48,46 @@ int MriWindow::handle(int event) {
     float window_y;
     float texture_x;
     float texture_y;
+    float normalized_x;
+    float normalized_y;
+    size_t voxel_x;
+    size_t voxel_y;
+    Fl_Widget *children;
 
     switch(event) {
     case FL_DRAG:
         /* Fallthrough */
     case FL_PUSH:
+      // Convert event coordinates to voxel numbers
         window_x = (2.0f * Fl::event_x() / w()) - 1;
         window_y = (2.0f * Fl::event_y() / h()) - 1;
-        std::cout << getMriWidthCoord();
-        texture_x = window_x / getMriWidthCoord();
+        texture_x = window_x / getMriWidthCoord();  // between -1 and 1
         texture_y = window_y / getMriHeightCoord();
-        std::cout << "Texture coordinates: (" << texture_x
-                  << ", " << texture_y << ")"<< std::endl;
+	normalized_x = clamp((texture_x + 1) / 2, 0, 1);
+	normalized_y = clamp((texture_y + 1) / 2, 0, 1);
+	voxel_x = static_cast<size_t> ((left_ + model_.scale() * normalized_x)
+				       * nextafterf(mri_.width(plane_), 0));
+	// Note: we add 0.001 to make sure we're in the interval [0, height)
+	// Otherwise we are in [0, height] which causes an out of bounds error
+	voxel_y = static_cast<size_t> (nextafterf(mri_.height(plane_), 0.0f) -
+				       (bottom_ + model_.scale() * normalized_y)
+				       * mri_.height(plane_));
+	model_.updatePush(voxel_x, voxel_y, plane_);
+
+	// The MRI windows are the first 3 widgets in the top window. Redraw
+	// them all.
+	for (int i = 0; i < 3; i++) {
+	  static_cast<Fl_Group *> (window()->child(i))->child(0)->redraw();
+        }
+
         return 1;
     default:
         return Fl_Gl_Window::handle(event);
     }
+}
+
+float MriWindow::clamp(float x, float min, float max) {
+  return std::max(min, std::min(x, max));
 }
 
 void MriWindow::draw() {
@@ -93,10 +121,9 @@ void MriWindow::draw() {
   if (!valid()) {
     glViewport(0, 0, w(), h());
   }
-  GLfloat data[] = {0.1f, 0.2f, 0.3f,
-		    0.4f, 0.5f, 0.6f,
-		    0.7f, 0.8f, 0.9f};
-  /* Load texture data */
+
+  /* Load image data into texture */
+  mri_.fillImage(image_, model_.slice(plane_), model_.t());
   glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, static_cast<GLsizei>(image_.width()),
 		  static_cast<GLsizei>(image_.height()), GL_LUMINANCE, GL_FLOAT,
 		  image_.data());
@@ -129,6 +156,10 @@ void MriWindow::draw() {
     bottom += delta;
     top += delta;
   }
+
+  // Save the MRI texture coords so callbacks can access them
+  bottom_ = bottom;
+  left_ = left;
 
   GLfloat width = getMriWidthCoord();
   GLfloat height = getMriHeightCoord();

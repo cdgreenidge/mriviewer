@@ -21,7 +21,8 @@ class Model {
   float scale() const noexcept;
 
   // Callbacks for GUI event handling
-  void updatePush(const float textureX, const float textureY);
+  void updatePush(const size_t textureX, const size_t textureY,
+		  const Plane plane);
 
  private:
   size_t x_;

@@ -19,17 +19,19 @@ struct Labels {
 class MriWindow : public Fl_Gl_Window {
  public:
   MriWindow(const int x, const int y, const int w, const int h,
-            const char *const i, const Mri mri, const Model model,
+            const char *const i, const Mri mri, Model &model,
             const Plane plane, const Labels labels);
 
  protected:
   Mri mri_;
-  Model model_;
+  Model &model_;
   Plane plane_;
   Image image_;
   Labels labels_;
 
   float maxLength_;
+  float bottom_;
+  float left_;
   struct {
     GLuint vertexBuffer;
     GLuint elementBuffer;
@@ -50,6 +52,7 @@ class MriWindow : public Fl_Gl_Window {
 
   /* Event handling */
   int handle(int event);
+  float clamp(float x, float min, float max);
 
   /* Rendering */
   void draw();
@@ -67,17 +70,17 @@ class MriWindow : public Fl_Gl_Window {
 class CoronalWindow : MriWindow {
  public:
   CoronalWindow(const int x, const int y, const int w, const int n,
-                const char *const i, const Mri mri, const Model model);
+                const char *const i, const Mri mri, Model &model);
 };
 
 class SagittalWindow : MriWindow {
  public:
   SagittalWindow(const int x, const int y, const int w, const int n,
-                 const char *const i, const Mri mri, const Model model);
+                 const char *const i, const Mri mri, Model &model);
 };
 
 class AxialWindow : MriWindow {
  public:
   AxialWindow(const int x, const int y, const int w, const int n,
-              const char *const i, const Mri mri, const Model model);
+              const char *const i, const Mri mri, Model &model);
 };
