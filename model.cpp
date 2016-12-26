@@ -44,9 +44,9 @@ size_t Model::t() const noexcept { return t_; }
 float Model::scale() const noexcept { return scale_; }
 
 void Model::updatePush(const size_t voxelX, const size_t voxelY,
-		       const Plane plane) {
-  (void) voxelX;
-  (void) voxelY;
+                       const Plane plane) {
+  (void)voxelX;
+  (void)voxelY;
   switch (plane) {
     case CORONAL:
       x_ = voxelX;

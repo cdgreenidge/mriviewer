@@ -19,8 +19,8 @@ struct Labels {
 class MriWindow : public Fl_Gl_Window {
  public:
   MriWindow(const int x, const int y, const int w, const int h,
-            const char *const i, const Mri mri, Model &model,
-            const Plane plane, const Labels labels);
+            const char *const i, const Mri mri, Model &model, const Plane plane,
+            const Labels labels);
 
  protected:
   Mri mri_;

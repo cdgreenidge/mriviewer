@@ -20,6 +20,9 @@ QUIET_LINK = @echo '    ' LINK $@
 
 all: main
 
+format:
+	@clang-format -i *.cpp *.h
+
 main: main.o model.o mri.o utils.o windows.o image.o
 	$(QUIET_LINK)
 	@$(CXX) $(LDFLAGS) -o $@ $^
