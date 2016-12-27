@@ -70,7 +70,16 @@ int MriWindow::handle(int event) {
                                     nextafterf(mri_.width(plane_), 0));
       voxel_y = static_cast<size_t>((bottom_ + model_.scale() * normalized_y) *
                                     nextafterf(mri_.height(plane_), 0));
-       model_.updatePush(voxel_x, voxel_y, plane_);
+      model_.updatePush(voxel_x, voxel_y, plane_);
+      break;
+    case FL_MOUSEWHEEL:
+      if (Fl::event_dy() < 0) {
+	// Scroll up
+	model_.zoomIn();
+      } else {
+	// Scroll down
+	model_.zoomOut();
+      }
       break;
     default:
       return Fl_Gl_Window::handle(event);
