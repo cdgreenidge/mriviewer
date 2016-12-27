@@ -63,15 +63,14 @@ int MriWindow::handle(int event) {
       texture_x = window_x / getMriWidthCoord();  // between -1 and 1
       texture_y = window_y / getMriHeightCoord();
       normalized_x = clamp((texture_x + 1) / 2, 0, 1);
-      normalized_y = clamp((texture_y + 1) / 2, 0, 1);
+      normalized_y = 1.0f - clamp((texture_y + 1) / 2, 0, 1);
+      // Note: the nextafterf calls make sure that we are in open intervals
+      // [0, mri.height()) and [0, mri.width()) to avoid off-by-one errors
       voxel_x = static_cast<size_t>((left_ + model_.scale() * normalized_x) *
                                     nextafterf(mri_.width(plane_), 0));
-      // Note: we add 0.001 to make sure we're in the interval [0, height)
-      // Otherwise we are in [0, height] which causes an out of bounds error
-      voxel_y = static_cast<size_t>(nextafterf(mri_.height(plane_), 0.0f) -
-                                    (bottom_ + model_.scale() * normalized_y) *
-                                        mri_.height(plane_));
-      model_.updatePush(voxel_x, voxel_y, plane_);
+      voxel_y = static_cast<size_t>((bottom_ + model_.scale() * normalized_y) *
+                                    nextafterf(mri_.height(plane_), 0));
+       model_.updatePush(voxel_x, voxel_y, plane_);
       break;
     default:
       return Fl_Gl_Window::handle(event);
@@ -81,10 +80,6 @@ int MriWindow::handle(int event) {
   // them all.
   static_cast<MainWindow *>(window())->redrawMri();
   return 1;
-}
-
-float MriWindow::clamp(float x, float min, float max) {
-  return std::max(min, std::min(x, max));
 }
 
 void MriWindow::draw() {

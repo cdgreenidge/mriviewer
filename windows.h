@@ -52,7 +52,6 @@ class MriWindow : public Fl_Gl_Window {
 
   /* Event handling */
   int handle(int event);
-  float clamp(float x, float min, float max);
 
   /* Rendering */
   void draw();

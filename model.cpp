@@ -5,6 +5,7 @@
 #include "image.h"
 #include "mri.h"
 #include "model.h"
+#include "utils.h"
 #include <iostream>
 
 Model::Model(size_t x, size_t y, size_t z, size_t t, float scale)
@@ -61,6 +62,17 @@ void Model::updatePush(const size_t voxelX, const size_t voxelY,
       y_ = voxelY;
       return;
   }
+}
+
+void Model::zoomIn() {
+  scale_ -= 0.1;
+  scale_ = clamp(scale_, 0.1f, 1.0f);
+  return;
+}
+
+void Model::zoomOut() {
+  scale_ += 0.1;
+  scale_ = clamp(scale_, 0.1f, 1.0f);
 }
 
 float Model::checkScale(const float scale) const {

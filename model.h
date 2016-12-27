@@ -23,6 +23,8 @@ class Model {
   // Callbacks for GUI event handling
   void updatePush(const size_t textureX, const size_t textureY,
                   const Plane plane);
+  void zoomIn();
+  void zoomOut();
 
  private:
   size_t x_;

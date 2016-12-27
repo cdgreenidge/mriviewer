@@ -3,6 +3,7 @@
 #include <FL/Fl_Gl_Window.H>
 #include <boost/multi_array.hpp>
 #include <string>
+#include <iostream>
 #include "image.h"
 #include "mri.h"
 #include "model.h"
@@ -20,6 +21,7 @@ void setColorTheme() {
 
 MainWindow::MainWindow(const Mri &mri, Model &model)
     : Fl_Window(800, 600, "MRI Viewer"),
+      model_(model),
       coronalGroup_(new Fl_Group(6, 21, 391, 276, "Coronal")),
       sagittalGroup_(new Fl_Group(402, 21, 391, 276, "Sagittal")),
       axialGroup_(new Fl_Group(6, 318, 391, 276, "Axial")),
@@ -44,6 +46,31 @@ void MainWindow::redrawMri() {
   sagittal_->redraw();
   axial_->redraw();
   return;
+}
+
+int MainWindow::handle(int event) {
+  char key;
+  switch (event) {
+    case FL_KEYBOARD:
+      key = static_cast<char>(Fl::event_key());
+      switch (key) {
+        case '=':
+        /* Fallthrough */
+        case '+':
+          model_.zoomIn();
+          break;
+        case '_':
+        /* Fallthrough */
+        case '-':
+          model_.zoomOut();
+          break;
+      }
+      break;
+    default:
+      return Fl_Window::handle(event);
+  }
+  redrawMri();
+  return 1;
 }
 
 int main(int argc, char **argv) {
