@@ -1,6 +1,7 @@
 #include <FL/Fl.H>
 #include <FL/gl.H>
 #include <FL/Fl_Gl_Window.H>
+#include <FL/Fl_Scrollbar.H>
 #include <boost/multi_array.hpp>
 #include <string>
 #include <iostream>
@@ -27,7 +28,8 @@ MainWindow::MainWindow(const Mri &mri, Model &model)
       axialGroup_(new Fl_Group(6, 318, 391, 276, "Axial")),
       coronal_(new CoronalWindow(6, 21, 391, 276, "Coronal", mri, model)),
       sagittal_(new SagittalWindow(402, 21, 391, 276, "Sagittal", mri, model)),
-      axial_(new AxialWindow(6, 318, 391, 276, "Axial", mri, model)) {
+      axial_(new AxialWindow(6, 318, 391, 276, "Axial", mri, model)),
+      scroller_(new TimeScrollbar(402, 318, 276, 20, mri, model)) {
   size_range(600, 450, 0, 0, 0, 0, true);
   resizable(this);
   add(coronalGroup_);
@@ -39,6 +41,8 @@ MainWindow::MainWindow(const Mri &mri, Model &model)
   add(axialGroup_);
   axialGroup_->labelfont(FL_HELVETICA_BOLD);
   axialGroup_->add(axial_);
+  add(scroller_);
+  scroller_->type(FL_HORIZONTAL);
 }
 
 void MainWindow::redrawMri() {
@@ -71,6 +75,28 @@ int MainWindow::handle(int event) {
   }
   redrawMri();
   return 1;
+}
+
+static void updateTimeCb(Fl_Widget *widget, void *) {
+  TimeScrollbar *timeScrollbar = static_cast<TimeScrollbar *>(widget);
+  timeScrollbar->updateTime();
+  return;
+}
+
+TimeScrollbar::TimeScrollbar(int X, int Y, int W, int H, Mri mri, Model &model)
+    : Fl_Scrollbar(X, Y, W, H, "Time"), mri_(mri), model_(model) {
+  bounds(0, mri.numVolumes());
+  value(0);
+  step(1);
+  linesize(1);
+  callback(updateTimeCb);
+  return;
+}
+
+void TimeScrollbar::updateTime() {
+  model_.setTime(value());
+  (static_cast<MainWindow *>(parent()))->redrawMri();
+  return;
 }
 
 int main(int argc, char **argv) {

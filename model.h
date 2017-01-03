@@ -25,12 +25,14 @@ class Model {
                   const Plane plane);
   void zoomIn();
   void zoomOut();
+  void setTime(size_t time);
 
  private:
   size_t x_;
   size_t y_;
   size_t z_;
   size_t t_;
+  size_t tmax_;
   float scale_;
 
   float checkScale(const float scale) const;

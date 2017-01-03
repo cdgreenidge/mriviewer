@@ -15,7 +15,3 @@ std::string readBinFile(const char* const fname) {
   in.close();
   return contents;
 }
-
-float clamp(float x, float min, float max) {
-  return std::max(min, std::min(x, max));
-}

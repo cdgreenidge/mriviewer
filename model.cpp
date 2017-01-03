@@ -16,6 +16,7 @@ Model::Model(Mri mri)
       y_(mri.numSlices(CORONAL) / 2),
       z_(mri.numSlices(AXIAL) / 2),
       t_(0),
+      tmax_(mri.numVolumes() - 1),
       scale_(1.0f) {}
 
 Slice Model::slice(Plane plane) const noexcept {
@@ -74,6 +75,8 @@ void Model::zoomOut() {
   scale_ += 0.1;
   scale_ = clamp(scale_, 0.1f, 1.0f);
 }
+
+void Model::setTime(size_t time) { t_ = clamp<size_t>(time, 0u, tmax_); }
 
 float Model::checkScale(const float scale) const {
   if (scale <= 0.0f || 1.0f < scale) {

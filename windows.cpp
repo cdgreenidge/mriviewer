@@ -1,6 +1,7 @@
 #include <FL/Fl.H>
 #include <FL/gl.H>
 #include <FL/Fl_Gl_Window.H>
+#include <FL/Fl_Scrollbar.H>
 #include <boost/multi_array.hpp>
 #include <iostream>
 #include <limits>
@@ -62,8 +63,8 @@ int MriWindow::handle(int event) {
       window_y = (2.0f * Fl::event_y() / h()) - 1;
       texture_x = window_x / getMriWidthCoord();  // between -1 and 1
       texture_y = window_y / getMriHeightCoord();
-      normalized_x = clamp((texture_x + 1) / 2, 0, 1);
-      normalized_y = 1.0f - clamp((texture_y + 1) / 2, 0, 1);
+      normalized_x = clamp<float>((texture_x + 1) / 2, 0, 1);
+      normalized_y = 1.0f - clamp<float>((texture_y + 1) / 2, 0, 1);
       // Note: the nextafterf calls make sure that we are in open intervals
       // [0, mri.height()) and [0, mri.width()) to avoid off-by-one errors
       voxel_x = static_cast<size_t>((left_ + model_.scale() * normalized_x) *
@@ -74,11 +75,11 @@ int MriWindow::handle(int event) {
       break;
     case FL_MOUSEWHEEL:
       if (Fl::event_dy() < 0) {
-	// Scroll up
-	model_.zoomIn();
+        // Scroll up
+        model_.zoomIn();
       } else {
-	// Scroll down
-	model_.zoomOut();
+        // Scroll down
+        model_.zoomOut();
       }
       break;
     default:
