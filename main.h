@@ -27,7 +27,6 @@ class MainWindow : public Fl_Window {
   Fl_Multiline_Output *position_;
   char positionBuffer_[128];
 
-
   int handle(int event);
   void updatePosition();
 };

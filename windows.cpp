@@ -99,10 +99,6 @@ void MriWindow::draw() {
   glGetIntegerv(GL_CURRENT_PROGRAM, &oldShader);
 
   if (!context_valid()) {
-    glPixelStorei(GL_PACK_ALIGNMENT, 1);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-
     resources_.vertexShader = makeShader(GL_VERTEX_SHADER, "vertexShader.glsl");
     resources_.fragmentShader =
         makeShader(GL_FRAGMENT_SHADER, "fragmentShader.glsl");
@@ -124,6 +120,22 @@ void MriWindow::draw() {
   if (!valid()) {
     glViewport(0, 0, w(), h());
   }
+
+  /* For whatever reason FLTK messes with the default values so we reset
+     * them all. Thanks for the hours of debugging, FLTK! */
+  glPixelStorei(GL_PACK_ROW_LENGTH, 0);
+  glPixelStorei(GL_PACK_IMAGE_HEIGHT, 0);
+  glPixelStorei(GL_PACK_SKIP_ROWS, 0);
+  glPixelStorei(GL_PACK_SKIP_PIXELS, 0);
+  glPixelStorei(GL_PACK_SKIP_IMAGES, 0);
+  glPixelStorei(GL_PACK_ALIGNMENT, 4);
+  glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+  glPixelStorei(GL_UNPACK_IMAGE_HEIGHT, 0);
+  glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
+  glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
+  glPixelStorei(GL_UNPACK_SKIP_IMAGES, 0);
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+  // no I'm not bitter :(
 
   /* Load image data into texture */
   mri_.fillImage(image_, model_.slice(plane_), model_.t());

@@ -32,8 +32,7 @@ MainWindow::MainWindow(const Mri &mri, Model &model)
       axial_(new AxialWindow(6, 318, 391, 276, "Axial", mri, model)),
       //      scroller_(new TimeScrollbar(402, 318, 276, 20, mri, model)) {
       scroller_(new TimeScrollbar(440, 318, 320, 20, mri, model)),
-      position_(new Fl_Multiline_Output(440, 368, 100, 100, ""))
-{
+      position_(new Fl_Multiline_Output(440, 368, 100, 100, "")) {
   size_range(600, 450, 0, 0, 0, 0, true);
   resizable(this);
   add(coronalGroup_);
@@ -88,7 +87,7 @@ int MainWindow::handle(int event) {
 
 void MainWindow::updatePosition() {
   sprintf(positionBuffer_, "Position:\n\nX:\t%lu\nY:\t%lu\nZ:\t%lu\nT:\t%lu",
-	  model_.x() + 1, model_.y() + 1, model_.z() + 1, model_.t() + 1);
+          model_.x() + 1, model_.y() + 1, model_.z() + 1, model_.t() + 1);
   position_->value(positionBuffer_);
   return;
 }
