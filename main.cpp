@@ -30,7 +30,6 @@ MainWindow::MainWindow(const Mri &mri, Model &model)
       coronal_(new CoronalWindow(6, 21, 391, 276, "Coronal", mri, model)),
       sagittal_(new SagittalWindow(402, 21, 391, 276, "Sagittal", mri, model)),
       axial_(new AxialWindow(6, 318, 391, 276, "Axial", mri, model)),
-      //      scroller_(new TimeScrollbar(402, 318, 276, 20, mri, model)) {
       scroller_(new TimeScrollbar(440, 318, 320, 20, mri, model)),
       position_(new Fl_Multiline_Output(440, 368, 100, 100, "")) {
   size_range(600, 450, 0, 0, 0, 0, true);
@@ -50,6 +49,11 @@ MainWindow::MainWindow(const Mri &mri, Model &model)
   position_->cursor_color(FL_BLACK);
   position_->box(FL_FLAT_BOX);
   updatePosition();
+
+  if (mri.numVolumes() == 1) {
+    // This is not a functional MRI, so disable the time slider
+    scroller_->deactivate();
+  }
 }
 
 void MainWindow::redrawMri() {
