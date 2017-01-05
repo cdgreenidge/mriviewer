@@ -118,6 +118,14 @@ void TimeScrollbar::updateTime() {
   return;
 }
 
+int TimeScrollbar::handle(int event) {
+  switch (event) {
+    case FL_MOUSEWHEEL:
+      return 0;
+  }
+  return Fl_Scrollbar::handle(event);
+}
+
 int main(int argc, char **argv) {
   setColorTheme();
 

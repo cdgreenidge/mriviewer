@@ -8,6 +8,8 @@ class TimeScrollbar : public Fl_Scrollbar {
  private:
   Mri mri_;
   Model &model_;
+
+  int handle(int event);
 };
 
 class MainWindow : public Fl_Window {
