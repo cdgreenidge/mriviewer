@@ -24,6 +24,10 @@ class MainWindow : public Fl_Window {
   SagittalWindow *const sagittal_;
   AxialWindow *const axial_;
   TimeScrollbar *scroller_;
+  Fl_Multiline_Output *position_;
+  char positionBuffer_[128];
+
 
   int handle(int event);
+  void updatePosition();
 };

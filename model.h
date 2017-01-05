@@ -17,6 +17,9 @@ class Model {
   explicit Model(Mri mri);
   Slice slice(Plane plane) const noexcept;
   Crosshair crosshair(Plane plane) const noexcept;
+  size_t x() const noexcept;
+  size_t y() const noexcept;
+  size_t z() const noexcept;
   size_t t() const noexcept;
   float scale() const noexcept;
 

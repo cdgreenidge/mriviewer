@@ -41,6 +41,9 @@ Crosshair Model::crosshair(Plane plane) const noexcept {
   }
 }
 
+size_t Model::x() const noexcept { return x_; }
+size_t Model::y() const noexcept { return y_; }
+size_t Model::z() const noexcept { return z_; }
 size_t Model::t() const noexcept { return t_; }
 
 float Model::scale() const noexcept { return scale_; }

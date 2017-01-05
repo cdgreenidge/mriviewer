@@ -2,6 +2,7 @@
 #include <FL/gl.H>
 #include <FL/Fl_Gl_Window.H>
 #include <FL/Fl_Scrollbar.H>
+#include <FL/Fl_Multiline_Output.H>
 #include <boost/multi_array.hpp>
 #include <iostream>
 #include <limits>

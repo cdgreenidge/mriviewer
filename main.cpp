@@ -2,6 +2,7 @@
 #include <FL/gl.H>
 #include <FL/Fl_Gl_Window.H>
 #include <FL/Fl_Scrollbar.H>
+#include <FL/Fl_Multiline_Output.H>
 #include <boost/multi_array.hpp>
 #include <string>
 #include <iostream>
@@ -15,7 +16,7 @@
 void setColorTheme();
 
 void setColorTheme() {
-  Fl::background2(255, 255, 255);
+  Fl::background2(0, 0, 0);
   Fl::background(0, 0, 0);
   Fl::foreground(200, 200, 200);
 }
@@ -29,7 +30,10 @@ MainWindow::MainWindow(const Mri &mri, Model &model)
       coronal_(new CoronalWindow(6, 21, 391, 276, "Coronal", mri, model)),
       sagittal_(new SagittalWindow(402, 21, 391, 276, "Sagittal", mri, model)),
       axial_(new AxialWindow(6, 318, 391, 276, "Axial", mri, model)),
-      scroller_(new TimeScrollbar(402, 318, 276, 20, mri, model)) {
+      //      scroller_(new TimeScrollbar(402, 318, 276, 20, mri, model)) {
+      scroller_(new TimeScrollbar(440, 318, 320, 20, mri, model)),
+      position_(new Fl_Multiline_Output(440, 368, 100, 100, ""))
+{
   size_range(600, 450, 0, 0, 0, 0, true);
   resizable(this);
   add(coronalGroup_);
@@ -43,12 +47,17 @@ MainWindow::MainWindow(const Mri &mri, Model &model)
   axialGroup_->add(axial_);
   add(scroller_);
   scroller_->type(FL_HORIZONTAL);
+  add(position_);
+  position_->cursor_color(FL_BLACK);
+  position_->box(FL_FLAT_BOX);
+  updatePosition();
 }
 
 void MainWindow::redrawMri() {
   coronal_->redraw();
   sagittal_->redraw();
   axial_->redraw();
+  updatePosition();
   return;
 }
 
@@ -75,6 +84,13 @@ int MainWindow::handle(int event) {
   }
   redrawMri();
   return 1;
+}
+
+void MainWindow::updatePosition() {
+  sprintf(positionBuffer_, "Position:\n\nX:\t%lu\nY:\t%lu\nZ:\t%lu\nT:\t%lu",
+	  model_.x() + 1, model_.y() + 1, model_.z() + 1, model_.t() + 1);
+  position_->value(positionBuffer_);
+  return;
 }
 
 static void updateTimeCb(Fl_Widget *widget, void *) {
